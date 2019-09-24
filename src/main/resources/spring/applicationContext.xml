@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+ http://www.springframework.org/schema/tx
+ http://www.springframework.org/schema/tx/spring-tx.xsd
+ http://www.springframework.org/schema/aop
+ http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <context:component-scan base-package="org.ssm_tts.service.impl"></context:component-scan>
+    <!--加载配置文件-->
+    <context:property-placeholder location="classpath:mysql.properties"></context:property-placeholder>
+    <!--数据源，使用dbcp-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${mysql.driver}" />
+        <property name="url" value="${mysql.url}" />
+        <property name="username" value="${mysql.username}" />
+        <property name="password" value="${mysql.password}" />
+        <property name="maxActive" value="${mysql.maxActive}" />
+        <property name="maxIdle" value="${mysql.maxIdle}" />
+    </bean>
+    <!--sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--加载mybatis的配置文件-->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+        <!--加载数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--配置分页插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+
+    <!--配置事务管理器，管理器需要事务，事务从Connection获取，连接从连接池中获取-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--mapper批量扫描，从mapper包中扫描出mapper接口，自动创建代理对象并在spring中注册
+         遵循规范:mapper.java和mapper.xml要保持同名和在同一目录下
+         自动扫描出的mapperbean的id为mapper类型(首字母小写)，如果要扫描多个包，包之间用,分隔-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.ssm_tts.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+
+    <!--5.事务管理-->
+    <!--5.1事务管理器-->
+    <!--5.2事务详情(事务通知),在aop筛选基础上，对ABC三个确定使用什么样的事务，例如:Ac读写，B只读等
+        <tx:attributes>用于配置事务详情(事务属性)
+        <tx:method name="transfer" propagation="REQUIRED" isolation="DEFAULT"/>详情的具体配置
+            propagation：传播行为
+            isolation：隔离级别
+    -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="reset*" propagation="REQUIRED" />
+            <tx:method name="edit*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="new*" propagation="REQUIRED" />
+            <tx:method name="set*" propagation="REQUIRED" />
+            <tx:method name="remove*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="change*" propagation="REQUIRED" />
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="load*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <!--5.3AOP编程。目标类ABCD(4个连接点)，切入点表达式 确定增强的连接点，从而获得切入点:ABC-->
+    <aop:config>
+        <aop:pointcut id="myPointCut" expression="execution(* org.ssm_tts.service.impl.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointCut"></aop:advisor>
+    </aop:config>
+</beans>

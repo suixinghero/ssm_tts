@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="org.ssm_tts.controller"></context:component-scan>
+
+
+    <!--视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--文件所在目录-->
+        <property name="prefix" value="/WEB-INF/views/"></property>
+        <!--文件后缀名-->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--配置文件解析器，名字必须为multipartResolver-->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>-->
+
+    <!--前端控制器，那些静态资源不拦截
+         mapping请求路劲带js下的任何文件都不会拦截
+         location表示js文件下的任何文件都不拦截-->
+    <!--<mvc:resources location="/js/" mapping="/js/**"/>  &lt;!&ndash; javascript &ndash;&gt;-->
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/images/" mapping="/images/**"/>
+    <mvc:resources location="/styles/" mapping="/styles/**"/>
+    <!--开启springmvc框架注解的支持conversion-service是自定义类型转换器生效-->
+    <mvc:annotation-driven ></mvc:annotation-driven>
+
+
+    <!--配置异常处理器-->
+    <!--<bean class="org.ssm_tts.util.SysExceptionResolver" id="sysExceptionResolver"></bean>-->
+</beans>

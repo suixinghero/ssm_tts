@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.RoleMapper">
+    <select id="getRoleString" parameterType="int" resultType="java.lang.String">
+        select GROUP_CONCAT(ar.rname) as rStr from
+          (select a_r.aid,r.rname from tts_a_r a_r,tts_role r
+            where a_r.aid=#{aid} and a_r.rid=r.rid ) ar GROUP BY ar.aid;
+    </select>
+
+    <select id="getRoleByPage" resultType="Role">
+        select * from tts_role
+    </select>
+
+    <select id="getRoleCount" resultType="int">
+        select count(*) from tts_role
+    </select>
+
+    <insert id="insertRole" parameterType="Role" useGeneratedKeys="true" keyProperty="rid">
+        insert into tts_role (rname,createuser,createtime) values (#{rname},#{createuser},now())
+    </insert>
+
+    <insert id="insertRP" parameterType="list">
+        insert into tts_r_p (pid,rid,createuser,createtime) values
+        <foreach collection="list" item="rp" separator=",">
+            (#{rp.pid},#{rp.role.rid},#{rp.role.createuser},now())
+        </foreach>
+    </insert>
+
+    <select id="getPidByRid" parameterType="int" resultType="int">
+        select pid from tts_r_p where rid=#{rid}
+    </select>
+
+    <update id="updateRoleName" parameterType="Role" >
+        update tts_role set rname=#{rname},updateuser=#{updateuser},updatetime=now() where rid=#{rid}
+    </update>
+    
+    <delete id="deleteRP" parameterType="Role">
+        delete from tts_r_p where rid=#{rid}
+    </delete>
+
+    <delete id="deleteRole" parameterType="int">
+        delete from tts_role where rid=#{rid}
+    </delete>
+
+    <select id="getAllRole" resultType="Role">
+        select rid,rname from tts_role
+    </select>
+
+    <select id="getAidByRname" parameterType="java.lang.String" resultType="int">
+       select aid from tts_a_r where rid=(select rid from tts_role where rname=#{rname})
+    </select>
+</mapper>

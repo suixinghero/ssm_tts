@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.AdminMapper">
+    <sql id="allAdminFields">
+        aid,aname,auname,apassword,aimage,atel,aemail,createuser,createtime,updateuser,updatetime
+    </sql>
+    <sql id="setAdminFields">
+        <set>
+            <if test="aid != null">aid=#{aid},</if>
+            <if test="aname != null">aname=#{aname},</if>
+            <if test="auname != null">auname=#{auname},</if>
+            <if test="apassword != null">apassword=#{apassword},</if>
+            <if test="aimage != null">aimage=#{aimage},</if>
+            <if test="atel != null">atel=#{atel},</if>
+            <if test="aemail != null">aemail=#{aemail},</if>
+            <if test="by1 != null">by1=#{by1},</if>
+            <if test="by2 != null">by2=#{by2},</if>
+            <if test="by3 != null">by3=#{by3},</if>
+            <if test="createuser != null">createuser=#{createuser},</if>
+            <if test="updateuser != null">updateuser=#{updateuser},</if>
+        </set>
+    </sql>
+    <select id="checkLogin" parameterType="Admin" resultType="Admin">
+       select <include refid="allAdminFields"></include>  from
+       tts_admin where auname=#{auname} and apassword=#{apassword}
+    </select>
+
+    <update id="updatePassword" parameterType="Admin" >
+       update tts_admin set apassword=#{apassword},updatetime=now(),updateuser=#{aname} where aid=#{aid}
+    </update>
+
+    <update id="updateAdmin" parameterType="Admin">
+       update tts_admin set aname=#{aname},atel=#{atel},aimage=#{aimage},aemail=#{aemail},updateuser=#{auname},updatetime=now() where aid=#{aid}
+    </update>
+
+    <select id="getAdminByPage" resultType="Admin">
+       select aid,aname,auname,atel,aemail,by4 from tts_admin
+    </select>
+
+    <select id="getAdminCount" resultType="int">
+       select count(*) from tts_admin
+    </select>
+
+    <insert id="insertAdmin" parameterType="Admin" useGeneratedKeys="true" keyProperty="aid">
+        insert into tts_admin (aname,auname,apassword,atel,aemail,by4,createuser,createtime)
+        values (#{aname},#{auname},#{apassword},#{atel},#{aemail},now(),#{createuser},now())
+    </insert>
+
+    <insert id="insertAR" parameterType="list">
+        insert into tts_a_r (rid,aid,createuser,createtime) values
+        <foreach collection="list" item="ar" separator=",">
+            (#{ar.rid},#{ar.admin.aid},#{ar.admin.createuser},now())
+        </foreach>
+    </insert>
+
+    <select id="getRidByAid" parameterType="int" resultType="int">
+         select rid from tts_a_r where aid=#{aid}
+    </select>
+
+    <update id="updateAdminByAdmin" parameterType="Admin">
+        update tts_admin <include refid="setAdminFields"></include>,updatetime=now() where aid=#{aid}
+    </update>
+
+    <delete id="deleteAR" parameterType="Admin">
+        delete from tts_a_r where aid=#{aid}
+    </delete>
+
+    <delete id="deleteAdmin" parameterType="int">
+        delete from tts_admin where aid=#{aid}
+    </delete>
+
+    <update id="resetPwd" parameterType="AL">
+        update tts_admin set apassword='c4ca4238a0b923820dcc509a6f75849b',
+        updateuser=#{updateuser},updatetime=now() where aid in
+        <foreach collection="aidList" item="aid" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+    </update>
+
+    <select id="getAdminByFind" parameterType="list" resultType="Admin">
+        select aid,aname,auname,atel,aemail,by4 from tts_admin where aid in
+        <foreach collection="list" item="aid" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+    </select>
+</mapper>

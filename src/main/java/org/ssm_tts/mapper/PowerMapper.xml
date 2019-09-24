@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.PowerMapper">
+    <sql id="allPowerFields">
+         pid,pclass,purl
+    </sql>
+    <select id="getPowerByAid" parameterType="int" resultType="Power">
+        select distinct <include refid="allPowerFields"></include>
+          from tts_power
+            where pid in (select pid from tts_r_p where rid in
+              (select rid from tts_a_r where aid=#{aid}))
+    </select>
+
+    <select id="getPowerString" resultType="java.lang.String" parameterType="int">
+        select GROUP_CONCAT(rp.by1) as rStr FROM
+        (select r_p.rid,p.by1 from tts_r_p r_p,tts_power p where r_p.rid=#{rid} and r_p.pid=p.pid) rp
+        GROUP BY rp.rid
+    </select>
+
+    <select id="getAllPower" resultType="Power">
+        select pid,by1 from tts_power
+    </select>
+</mapper>
