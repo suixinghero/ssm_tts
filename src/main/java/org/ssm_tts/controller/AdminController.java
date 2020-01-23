@@ -35,28 +35,28 @@ public class AdminController {
 
     @RequestMapping("/adminList/{page}")
     public String adminList(@PathVariable(value = "page")String page, HttpServletRequest request){
-         int   currentPage=Integer.parseInt(page);
-        List<Admin> adminList=adminService.getAdminByPage(currentPage);
-        int pages=0;
-        int count=adminService.getAdminCount();
-        if(count%Admin.PAGE_SIZE==0){
-            pages=count/Admin.PAGE_SIZE;
-        }else{
-            pages=count/Admin.PAGE_SIZE+1;
+        int currentPage = Integer.parseInt(page);
+        List<Admin> adminList = adminService.getAdminByPage(currentPage);
+        int pages = 0;
+        int count = adminService.getAdminCount();
+        if (count % Admin.PAGE_SIZE == 0) {
+            pages = count / Admin.PAGE_SIZE;
+        } else {
+            pages = count / Admin.PAGE_SIZE + 1;
         }
-        StringBuffer sb=new StringBuffer();
-        for (int i = 1; i <=pages; i++) {
-            if(currentPage==i){
-                sb.append("["+i+"]");
-            }else{
-                sb.append("<a href='"+request.getContextPath()+"/admin/adminList/"+i+"'>"+i+"</a>");
+        StringBuffer sb = new StringBuffer();
+        for (int i = 1; i <= pages; i++) {
+            if (currentPage == i) {
+                sb.append("[" + i + "]");
+            } else {
+                sb.append("<a href='" + request.getContextPath() + "/admin/adminList/" + i + "'>" + i + "</a>");
             }
             sb.append(" ");
         }
-        List<Role> roleList=roleService.getAllRole();
-        request.getSession().setAttribute("roleList",roleList);
-        request.getSession().setAttribute("adminList",adminList);
-        request.getSession().setAttribute("bar",sb.toString());
+        List<Role> roleList = roleService.getAllRole();
+        request.getSession().setAttribute("roleList", roleList);
+        request.getSession().setAttribute("adminList", adminList);
+        request.getSession().setAttribute("bar", sb.toString());
         return "redirect:../go_admin_list";
     }
 

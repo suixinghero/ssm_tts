@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.SBMapper">
+    <resultMap id="querySBResultMap" type="SB">
+        <id property="sb_id" column="sb_id"></id>
+        <result property="bd_id" column="bd_id"></result>
+        <result property="sb_loginin_time" column="sb_loginin_time"></result>
+        <result property="sb_loginout_time" column="sb_loginout_time"></result>
+        <result property="sb_duration" column="sb_duration"></result>
+        <result property="sb_cost" column="sb_cost"></result>
+        <result property="f_id" column="f_id"></result>
+        <result property="extinfo1" column="extinfo1"></result>
+        <result property="extinfo2" column="extinfo2"></result>
+        <result property="extinfo3" column="extinfo3"></result>
+        <result property="sb_ip" column="sb_ip"></result>
+        <association property="fee" column="f_id" select="org.ssm_tts.mapper.FeeMapper.queryFeeById"></association>
+    </resultMap>
+    <select id="querySB" parameterType="SB" resultMap="querySBResultMap">
+        select sb_id,bd_id,sb_loginin_time,sb_loginout_time,
+        sb_duration,sb_cost,f_id,extinfo1,extinfo2,extinfo3,
+        sb_ip
+        from tts_bs
+        <where>
+            <if test="sb_id != null and sb_id != '' ">
+                and sb_id = #{sb_id}
+            </if>
+            <if test="bd_id != null and bd_id != '' ">
+                and bd_id = #{bd_id}
+            </if>
+            <if test="f_id != null and f_id != '' ">
+                and f_id = #{f_id}
+            </if>
+            <if test="extinfo1 != null and extinfo1 != '' ">
+                and extinfo1 = #{extinfo1}
+            </if>
+            <if test="extinfo2 != null and extinfo2 != '' ">
+                and extinfo2 = #{extinfo2}
+            </if>
+            <if test="sb_ip != null and sb_ip != '' ">
+                and sb_ip = #{sb_ip}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

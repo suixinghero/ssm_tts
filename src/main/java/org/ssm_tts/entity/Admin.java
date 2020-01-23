@@ -8,7 +8,7 @@ import java.util.List;
  * @create 2019-08-18 12:28
  */
 public class Admin {
-    public static final int PAGE_SIZE=5;
+    public static final int PAGE_SIZE=8;
     /**
      *管理员的id
      */

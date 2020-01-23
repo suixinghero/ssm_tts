@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.FeeMapper">
+    <insert id="insertFee" parameterType="Fee" useGeneratedKeys="true" keyProperty="id">
+        insert into tts_fee (createtime,
+        <trim suffix=")" suffixOverrides=",">
+            <if test="ac_name != null">
+                ac_name,
+            </if>
+            <if test="base_duration != null">
+                base_duration,
+            </if>
+            <if test="base_cost != null">
+                base_cost,
+            </if>
+            <if test="unit_cost != null">
+                unit_cost,
+            </if>
+            <if test="ac_type != null">
+                ac_type,
+            </if>
+            <if test="ac_desc != null">
+                ac_desc,
+            </if>
+            <if test="ac_status != null">
+                ac_status,
+            </if>
+            <if test="extinfo1 != null">
+                extinfo1,
+            </if>
+            <if test="extinfo2 != null">
+                extinfo2,
+            </if>
+        </trim>
+        values (now(),
+        <trim suffix=")" suffixOverrides=",">
+            <if test="ac_name != null">
+                #{ac_name},
+            </if>
+            <if test="base_duration != null">
+                #{base_duration},
+            </if>
+            <if test="base_cost != null">
+                #{base_cost},
+            </if>
+            <if test="unit_cost != null">
+                #{unit_cost},
+            </if>
+            <if test="ac_type != null">
+                #{ac_type},
+            </if>
+            <if test="ac_desc != null">
+                #{ac_desc},
+            </if>
+            <if test="ac_status != null">
+                #{ac_status},
+            </if>
+            <if test="extinfo1 != null">
+                #{extinfo1},
+            </if>
+            <if test="extinfo2 != null">
+                #{extinfo2},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateFee" parameterType="Fee">
+        update tts_fee
+        <set >
+            <if test="ac_name != null" >
+                ac_name = #{ac_name},
+            </if>
+            <if test="base_duration != null" >
+                base_duration = #{base_duration},
+            </if>
+            <if test="base_cost != null" >
+                base_cost = #{base_cost},
+            </if>
+            <if test="unit_cost != null" >
+                unit_cost = #{unit_cost},
+            </if>
+            <if test="ac_type != null" >
+                ac_type = #{ac_type},
+            </if>
+            <if test="ac_desc != null" >
+                ac_desc = #{ac_desc},
+            </if>
+            <if test="(ac_status != null and ac_status != '') or ac_status == 0" >
+                ac_status = #{ac_status},
+            </if>
+            <if test="starttime != null" >
+                starttime = now(),
+            </if>
+            <if test="extinfo1 != null" >
+                extinfo1 = #{extinfo1},
+            </if>
+            <if test="extinfo2 != null" >
+                extinfo2 = #{extinfo2},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="queryFee" parameterType="Fee" resultType="Fee">
+        select id,ac_name,base_duration,base_cost,unit_cost,ac_type,ac_desc,
+        ac_status,createtime,starttime,extinfo1,extinfo2,extinfo3
+        from tts_fee
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ac_name != null">
+                and ac_name = #{ac_name}
+            </if>
+            <if test="base_duration != null">
+                and base_duration = #{base_duration}
+            </if>
+            <if test="base_cost != null">
+                and base_cost = #{base_cost}
+            </if>
+            <if test="unit_cost != null">
+                and unit_cost = #{unit_cost}
+            </if>
+            <if test="ac_type != null">
+                and ac_type = #{ac_type}
+            </if>
+            <if test="ac_desc != null">
+                and ac_desc = #{ac_desc}
+            </if>
+            <if test="(ac_status != null and ac_status != '') or ac_status == 0">
+                and ac_status = #{ac_status}
+            </if>
+            <if test="extinfo1 != null">
+                and extinfo1 = #{extinfo1}
+            </if>
+            <if test="extinfo2 != null">
+                and extinfo2 = #{extinfo2}
+            </if>
+        </where>
+        <trim prefix="order by" suffixOverrides=",">
+            <if test="sortFlag == -1">
+                base_duration desc,
+            </if>
+            <if test="sortFlag == -3">
+                base_cost desc ,
+            </if>
+            <if test="sortFlag == -5">
+                unit_cost desc,
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryFeeById" parameterType="int" resultType="Fee">
+        select id,ac_name,base_duration,base_cost,unit_cost,ac_type,ac_desc,
+        ac_status,createtime,starttime,extinfo1,extinfo2,extinfo3
+        from tts_fee
+        where id=#{f_id}
+    </select>
+</mapper>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.ServiceMapper">
+    <resultMap id="queryServiceResultMap" type="Service">
+        <id property="s_id" column="s_id"></id>
+        <result property="acc_id" column="acc_id"></result>
+        <result property="s_id_card" column="s_id_card"></result>
+        <result property="s_name" column="s_name"></result>
+        <result property="s_os" column="s_os"></result>
+        <result property="s_status" column="s_status"></result>
+        <result property="s_ip" column="s_ip"></result>
+        <result property="s_pass" column="s_pass"></result>
+        <result property="extinfo1" column="extinfo1"></result>
+        <result property="extinfo2" column="extinfo2"></result>
+        <result property="extinfo3" column="extinfo3"></result>
+        <result property="createtime" column="createtime"></result>
+        <result property="f_id" column="f_id"></result>
+        <result property="bd_id" column="bd_id"></result>
+        <association property="fee" column="f_id" select="org.ssm_tts.mapper.FeeMapper.queryFeeById"></association>
+        <association property="bd" column="bd_id" select="org.ssm_tts.mapper.BDMapper.queryBDById"></association>
+    </resultMap>
+    <select id="queryService" parameterType="Service" resultMap="queryServiceResultMap">
+        select s_id,acc_id,s_id_card,s_name,s_os,s_status,s_ip,
+        s_pass,extinfo1,extinfo2,extinfo3,createtime,f_id,bd_id
+        from tts_service
+        <where>
+            <if test="s_id != null and s_id != '' ">
+                and s_id = #{s_id}
+            </if>
+            <if test="acc_id != null and acc_id != '' ">
+                and acc_id = #{acc_id}
+            </if>
+            <if test="s_id_card != null and s_id_card != '' ">
+                and s_id_card = #{s_id_card}
+            </if>
+            <if test="s_name != null and s_name != '' ">
+                and s_name = #{s_name}
+            </if>
+            <if test="(s_status != null and s_status != '') or s_status == 0 ">
+                and s_status = #{s_status}
+            </if>
+            <if test="s_os != null and s_os != '' ">
+                and s_os = #{s_os}
+            </if>
+            <if test="s_ip != null and s_ip != '' ">
+                and s_ip = #{s_ip}
+            </if>
+            <if test="extinfo1 != null and extinfo1 != '' ">
+                and extinfo1 = #{extinfo1}
+            </if>
+            <if test="extinfo2 != null and extinfo2 != '' ">
+                and extinfo2 = #{extinfo2}
+            </if>
+            <if test="f_id != null and f_id != '' ">
+                and f_id = #{f_id}
+            </if>
+            <if test="bd_id != null and bd_id != '' ">
+                and bd_id = #{bd_id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertService" parameterType="Service" useGeneratedKeys="true" keyProperty="s_id">
+        insert into tts_service (createtime,
+        <trim suffix=")" suffixOverrides=",">
+            <if test="acc_id != null">
+                acc_id,
+            </if>
+            <if test="s_id_card != null">
+                s_id_card,
+            </if>
+            <if test="s_name != null">
+                s_name,
+            </if>
+            <if test="s_os != null">
+                s_os,
+            </if>
+            <if test="s_status != null">
+                s_status,
+            </if>
+            <if test="s_ip != null">
+                s_ip,
+            </if>
+            <if test="s_pass != null">
+                s_pass,
+            </if>
+            <if test="extinfo1 != null">
+                extinfo1,
+            </if>
+            <if test="extinfo2 != null">
+                extinfo2,
+            </if>
+            <if test="f_id != null">
+                f_id,
+            </if>
+            <if test="bd_id != null">
+                bd_id,
+            </if>
+        </trim>
+        values (now(),
+        <trim suffix=")" suffixOverrides=",">
+            <if test="acc_id != null">
+                #{acc_id},
+            </if>
+            <if test="s_id_card != null">
+                #{s_id_card},
+            </if>
+            <if test="s_name != null">
+                #{s_name},
+            </if>
+            <if test="s_os != null">
+                #{s_os},
+            </if>
+            <if test="s_status != null">
+                #{s_status},
+            </if>
+            <if test="s_ip != null">
+                #{s_ip},
+            </if>
+            <if test="s_pass != null">
+                #{s_pass},
+            </if>
+            <if test="extinfo1 != null">
+                #{extinfo1},
+            </if>
+            <if test="extinfo2 != null">
+                #{extinfo2},
+            </if>
+            <if test="f_id != null">
+                #{f_id},
+            </if>
+            <if test="bd_id != null">
+                #{bd_id},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateService" parameterType="Service">
+        update tts_service
+        <set >
+            <if test="acc_id != null" >
+                acc_id = #{acc_id},
+            </if>
+            <if test="s_id_card != null" >
+                s_id_card = #{s_id_card},
+            </if>
+            <if test="s_name != null" >
+                s_name = #{s_name},
+            </if>
+            <if test="s_os != null" >
+                s_os = #{s_os},
+            </if>
+            <if test="(s_status != null and s_status != '') or s_status == 0" >
+                s_status = #{s_status},
+            </if>
+            <if test="s_ip != null" >
+                s_ip = #{s_ip},
+            </if>
+            <if test="s_pass != null" >
+                s_pass = #{s_pass},
+            </if>
+            <if test="extinfo1 != null" >
+                extinfo1 = #{extinfo1},
+            </if>
+            <if test="extinfo2 != null">
+                extinfo2 = #{extinfo2},
+            </if>
+            <if test="f_id != null">
+                f_id = #{f_id},
+            </if>
+            <if test="bd_id != null">
+                bd_id = #{bd_id},
+            </if>
+        </set>
+        <where>
+            <if test="s_id != null">
+                and s_id = #{s_id}
+            </if>
+            <if test="acc_id != null">
+                and acc_id = #{acc_id}
+            </if>
+        </where>
+    </update>
+</mapper>

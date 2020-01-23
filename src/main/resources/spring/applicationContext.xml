@@ -74,17 +74,15 @@ http://www.springframework.org/schema/context/spring-context.xsd
             <tx:method name="insert*" propagation="REQUIRED" />
             <tx:method name="update*" propagation="REQUIRED" />
             <tx:method name="reset*" propagation="REQUIRED" />
-            <tx:method name="edit*" propagation="REQUIRED" />
+            <tx:method name="modify*" propagation="REQUIRED" />
             <tx:method name="save*" propagation="REQUIRED" />
             <tx:method name="add*" propagation="REQUIRED" />
-            <tx:method name="new*" propagation="REQUIRED" />
             <tx:method name="set*" propagation="REQUIRED" />
             <tx:method name="remove*" propagation="REQUIRED" />
             <tx:method name="delete*" propagation="REQUIRED" />
-            <tx:method name="change*" propagation="REQUIRED" />
             <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
             <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="load*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="query*" propagation="SUPPORTS" read-only="true" />
             <tx:method name="*" propagation="SUPPORTS" read-only="true" />
         </tx:attributes>
     </tx:advice>
@@ -93,4 +91,6 @@ http://www.springframework.org/schema/context/spring-context.xsd
         <aop:pointcut id="myPointCut" expression="execution(* org.ssm_tts.service.impl.*.*(..))"></aop:pointcut>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointCut"></aop:advisor>
     </aop:config>
+
+    <import resource="classpath:spring/spring-*.xml"></import>
 </beans>

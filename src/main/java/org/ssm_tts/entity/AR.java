@@ -4,6 +4,7 @@ package org.ssm_tts.entity;
  * @author xujin
  * @package-name org.ssm_tts.entity
  * @createtime 2019-09-17 19:45
+ * 管理员角色关联对象
  */
 
 public class AR {

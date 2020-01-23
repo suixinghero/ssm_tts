@@ -23,7 +23,9 @@ http://www.springframework.org/schema/context/spring-context.xsd">
     </bean>
 
     <!--配置文件解析器，名字必须为multipartResolver-->
-    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>-->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+        <!---->
+    <!--</bean>-->
 
     <!--前端控制器，那些静态资源不拦截
          mapping请求路劲带js下的任何文件都不会拦截

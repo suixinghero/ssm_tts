@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.AccountMapper">
+    <resultMap id="queryAccountResultMap" type="Account">
+        <id property="acc_id" column="acc_id"></id>
+        <result property="acc_name" column="acc_name"></result>
+        <result property="acc_id_card" column="acc_id_card"></result>
+        <result property="login_name" column="login_name"></result>
+        <result property="acc_status" column="acc_status"></result>
+        <result property="createtime" column="createtime"></result>
+        <result property="lasttime" column="lasttime"></result>
+        <result property="login_account" column="login_account"></result>
+        <result property="acc_pass" column="acc_pass"></result>
+        <result property="acc_tel" column="acc_tel"></result>
+        <result property="recomm_id_card" column="recomm_id_card"></result>
+        <result property="acc_birth" column="acc_birth"></result>
+        <result property="acc_email" column="acc_email"></result>
+        <result property="profession" column="profession"></result>
+        <result property="acc_sex" column="acc_sex"></result>
+        <result property="acc_address" column="acc_address"></result>
+        <result property="acc_code" column="acc_code"></result>
+        <result property="acc_qq" column="acc_qq"></result>
+        <result property="extinfo1" column="extinfo1"></result>
+        <result property="extinfo2" column="extinfo2"></result>
+        <result property="extinfo3" column="extinfo3"></result>
+        <result property="last_login_ip" column="last_login_ip"></result>
+        <result property="b_id" column="b_id"></result>
+        <association property="bill" column="b_id" select="org.ssm_tts.mapper.BillMapper.queryBillById"></association>
+    </resultMap>
+    <select id="queryAccount" parameterType="Account" resultMap="queryAccountResultMap">
+        select acc_id,acc_name,acc_id_card,login_name,acc_status,createtime,
+        lasttime,login_account,acc_pass,acc_tel,recomm_id_card,acc_birth,
+        acc_email,profession,acc_sex,acc_address,acc_code,acc_qq,extinfo1,
+        extinfo2,extinfo3,last_login_ip,b_id
+        from tts_account
+        <where>
+            <if test="acc_id != null and acc_id != '' ">
+                and acc_id = #{acc_id}
+            </if>
+            <if test="acc_name != null and acc_name != '' ">
+                and acc_name = #{acc_name}
+            </if>
+            <if test="acc_id_card != null and acc_id_card != '' ">
+                and acc_id_card = #{acc_id_card}
+            </if>
+            <if test="login_name != null and login_name != '' ">
+                and login_name = #{login_name}
+            </if>
+            <if test="(acc_status != null and acc_status != '') or acc_status == 0 ">
+                and acc_status = #{acc_status}
+            </if>
+            <if test="recomm_id_card != null and recomm_id_card != '' ">
+                and recomm_id_card = #{recomm_id_card}
+            </if>
+            <if test="login_account != null and login_account != '' ">
+                and login_account = #{login_account}
+            </if>
+            <if test="acc_qq != null and acc_qq != '' ">
+                and acc_qq = #{acc_qq}
+            </if>
+            <if test="extinfo1 != null and extinfo1 != '' ">
+                and extinfo1 = #{extinfo1}
+            </if>
+            <if test="extinfo2 != null and extinfo2 != '' ">
+                and extinfo2 = #{extinfo2}
+            </if>
+            <if test="last_login_ip != null and last_login_ip != '' ">
+                and last_login_ip = #{last_login_ip}
+            </if>
+            <if test="b_id != null and b_id != '' ">
+                and b_id = #{b_id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertAccount" parameterType="Account" useGeneratedKeys="true" keyProperty="acc_id">
+        insert into tts_account (createtime,
+        <trim suffix=")" suffixOverrides=",">
+            <if test="acc_name != null">
+                acc_name,
+            </if>
+            <if test="acc_id_card != null">
+                acc_id_card,
+            </if>
+            <if test="login_name != null">
+                login_name,
+            </if>
+            <if test="acc_status != null">
+                acc_status,
+            </if>
+            <if test="login_account != null">
+                login_account,
+            </if>
+            <if test="acc_pass != null">
+                acc_pass,
+            </if>
+            <if test="acc_tel != null">
+                acc_tel,
+            </if>
+            <if test="recomm_id_card != null">
+                recomm_id_card,
+            </if>
+            <if test="acc_birth != null">
+                acc_birth,
+            </if>
+            <if test="acc_email != null">
+                acc_email,
+            </if>
+            <if test="profession != null">
+                profession,
+            </if>
+            <if test="acc_sex != null">
+                acc_sex,
+            </if>
+            <if test="acc_address != null">
+                acc_address,
+            </if>
+            <if test="acc_code != null">
+                acc_code,
+            </if>
+            <if test="acc_qq != null">
+                acc_qq,
+            </if>
+            <if test="extinfo1 != null">
+                extinfo1,
+            </if>
+            <if test="extinfo2 != null">
+                extinfo2,
+            </if>
+            <if test="b_id != null">
+                b_id,
+            </if>
+        </trim>
+        values (now(),
+        <trim suffix=")" suffixOverrides=",">
+            <if test="acc_name != null">
+                #{acc_name},
+            </if>
+            <if test="acc_id_card != null">
+                #{acc_id_card},
+            </if>
+            <if test="login_name != null">
+                #{login_name},
+            </if>
+            <if test="acc_status != null">
+                #{acc_status},
+            </if>
+            <if test="login_account != null">
+                #{login_account},
+            </if>
+            <if test="acc_pass != null">
+                #{acc_pass},
+            </if>
+            <if test="acc_tel != null">
+                #{acc_tel},
+            </if>
+            <if test="recomm_id_card != null">
+                #{recomm_id_card},
+            </if>
+            <if test="acc_birth != null">
+                str_to_date(#{acc_birth}, '%Y-%m-%d'),
+            </if>
+            <if test="acc_email != null">
+                #{acc_email},
+            </if>
+            <if test="profession != null">
+                #{profession},
+            </if>
+            <if test="acc_sex != null">
+                #{acc_sex},
+            </if>
+            <if test="acc_address != null">
+                #{acc_address},
+            </if>
+            <if test="acc_code != null">
+                #{acc_code},
+            </if>
+            <if test="acc_qq != null">
+                #{acc_qq},
+            </if>
+            <if test="extinfo1 != null">
+                #{extinfo1},
+            </if>
+            <if test="extinfo2 != null">
+                #{extinfo2},
+            </if>
+            <if test="b_id != null">
+                #{b_id},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateAccount" parameterType="Account">
+        update tts_account
+        <set >
+            <if test="acc_name != null" >
+                acc_name = #{acc_name},
+            </if>
+            <if test="acc_id_card != null" >
+                acc_id_card = #{acc_id_card},
+            </if>
+            <if test="login_name != null" >
+                login_name = #{login_name},
+            </if>
+            <if test="(acc_status != null and acc_status != '') or acc_status == 0" >
+                acc_status = #{acc_status},
+            </if>
+            <if test="lasttime != null" >
+                lasttime = now(),
+            </if>
+            <if test="login_account != null" >
+                login_account = #{login_account},
+            </if>
+            <if test="acc_pass != null" >
+                acc_pass = #{acc_pass},
+            </if>
+            <if test="acc_tel != null" >
+                acc_tel = #{acc_tel},
+            </if>
+            <if test="recomm_id_card != null" >
+                recomm_id_card = #{recomm_id_card},
+            </if>
+            <if test="acc_birth != null" >
+                acc_birth = str_to_date(#{acc_birth}, '%Y-%m-%d'),
+            </if>
+            <if test="acc_email != null" >
+                acc_email = #{acc_email},
+            </if>
+            <if test="profession != null" >
+                profession = #{profession},
+            </if>
+            <if test="acc_sex != null" >
+                acc_sex = #{acc_sex},
+            </if>
+            <if test="acc_address != null" >
+                acc_address = #{acc_address},
+            </if>
+            <if test="acc_code != null" >
+                acc_code = #{acc_code},
+            </if>
+            <if test="acc_qq != null" >
+                acc_qq = #{acc_qq},
+            </if>
+            <if test="extinfo1 != null" >
+                extinfo1 = #{extinfo1},
+            </if>
+            <if test="extinfo2 != null">
+                extinfo2 = #{extinfo2},
+            </if>
+            <if test="last_login_ip != null">
+                last_login_ip = #{last_login_ip},
+            </if>
+            <if test="b_id != null">
+                b_id = #{b_id},
+            </if>
+        </set>
+        where acc_id = #{acc_id}
+    </update>
+
+    <delete id="deleteAccount" parameterType="Account" >
+        delete from tts_account where acc_id=#{acc_id}
+    </delete>
+</mapper>

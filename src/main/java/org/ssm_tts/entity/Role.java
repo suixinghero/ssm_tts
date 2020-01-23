@@ -8,7 +8,7 @@ import java.util.List;
  * @create 2019-08-18 12:40
  */
 public class Role {
-    public static final int PAGE_SIZE=5;
+    public static final Integer PAGE_SIZE=8;
     /**
      *角色id
      */

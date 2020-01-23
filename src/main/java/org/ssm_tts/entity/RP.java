@@ -4,6 +4,7 @@ package org.ssm_tts.entity;
  * @author xujin
  * @package-name org.ssm_tts.entity
  * @createtime 2019-09-14 19:29
+ * 角色权限关联对象
  */
 
 public class RP {

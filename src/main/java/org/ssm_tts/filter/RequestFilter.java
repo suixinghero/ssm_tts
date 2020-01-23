@@ -18,7 +18,7 @@ import java.util.List;
  * @package-name org.tts.util
  * @create 2019-08-18 16:03
  */
-@WebFilter(filterName = "RequestFilter",urlPatterns = {"/login/*","/user/*","/role/*","/admin/*"},
+@WebFilter(filterName = "RequestFilter",urlPatterns = {"/login/*","/user/*","/role/*","/admin/*","/fee/*","/account/*","/service/*","/bill/*","/report/*"},
            initParams = {@WebInitParam(name = "url",value = "login.jsp;error.jsp;nopower.jsp;getImage;goIndex"),
                          @WebInitParam(name = "path",value = "loginIndex;user_info;user_modi_pwd;exit;updateAdmin;updatePwd")})
 public class RequestFilter implements Filter {

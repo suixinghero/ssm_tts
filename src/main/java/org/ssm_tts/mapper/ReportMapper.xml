@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.ReportMapper">
+    <select id="queryReport" parameterType="Report" resultType="Report">
+        select re_id,re_account,re_id_card,re_tel,re_start_time,
+        cumulative_duration,extinfo1,extinfo2,extinfo3,re_cost,
+        re_name
+        from tts_report
+        <where>
+            <if test="re_id != null">
+                and re_id = #{re_id}
+            </if>
+            <if test="re_account != null">
+                and re_account = #{re_account}
+            </if>
+            <if test="re_id_card != null">
+                and re_id_card = #{re_id_card}
+            </if>
+            <if test="re_tel != null">
+                and re_tel = #{re_tel}
+            </if>
+            <if test="extinfo1 != null">
+                and extinfo1 = #{extinfo1}
+            </if>
+            <if test="extinfo2 != null">
+                and extinfo2 = #{extinfo2}
+            </if>
+            <if test="re_name != null">
+                and re_name = #{re_name}
+            </if>
+        </where>
+        <trim prefix="order by" suffixOverrides=",">
+            <if test="sortFlag == 1">
+                cumulative_duration desc,
+            </if>
+            <if test="sortFlag == 2">
+                re_cost desc ,
+            </if>
+        </trim>
+    </select>
+</mapper>

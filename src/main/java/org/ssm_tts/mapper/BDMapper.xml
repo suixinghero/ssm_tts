@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssm_tts.mapper.BDMapper">
+    <select id="queryBDById" parameterType="int" resultType="BD">
+        select bd_id,bd_duration,bd_cost,createtime,extinfo1,extinfo2,
+        extinfo3
+        from tts_bd
+        where bd_id=#{bd_id}
+    </select>
+
+    <select id="queryBD" parameterType="BD" resultType="BD">
+        select bd_id,bd_duration,bd_cost,createtime,extinfo1,extinfo2,
+        extinfo3
+        from tts_bd
+        <where>
+            <if test="bd_id != null">
+                and bd_id = #{bd_id}
+            </if>
+            <if test="extinfo1 != null">
+                and extinfo1 = #{extinfo1}
+            </if>
+            <if test="extinfo2 != null">
+                and extinfo2 = #{extinfo2}
+            </if>
+        </where>
+    </select>
+</mapper>

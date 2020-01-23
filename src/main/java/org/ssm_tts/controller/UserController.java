@@ -90,9 +90,11 @@ public class UserController {
                 webResource.put(fileItem.get());
             }
         }
+        System.out.println(admin);
         Integer aid= ((Admin) request.getSession().getAttribute("admin1")).getAid();
         String aname=((Admin) request.getSession().getAttribute("admin1")).getAname();
         Admin admin1=((Admin) request.getSession().getAttribute("admin1"));
+        System.out.println(new Admin(aid,aname,admin.getAname(),admin.getAtel(),admin.getAemail(),url));
         boolean flag=adminService.updateAdmin(new Admin(aid,aname,admin.getAname(),admin.getAtel(),admin.getAemail(),url));
         if(flag){
             admin1.setAname(admin.getAname());
