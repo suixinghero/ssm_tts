@@ -67,7 +67,6 @@ public class LoginController {
             }
         } else {
             request.getSession().setAttribute("login_f_msg", ErrorMsg.LOGIN_F_MSG);
-            System.out.println(request.getSession().getAttribute("login_f_msg"));
             return "redirect:../login.jsp";
 
         }

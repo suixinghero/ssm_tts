@@ -38,7 +38,7 @@ public class RequestFilter implements Filter {
         System.out.println(request.getRequestURI());
         if(urlArray!=null&&urlArray.length>0){
             for (String s : urlArray) {
-                if(s==null||"".equals(s)) continue;;
+                if(s==null||"".equals(s)) continue;
                 if(request.getRequestURI().indexOf(s)!=-1){
                     filterChain.doFilter(request,response);
                     return;
@@ -49,7 +49,7 @@ public class RequestFilter implements Filter {
             String[] pathArray=path.split(";");
             if(pathArray!=null&&pathArray.length>0){
                 for (String p : pathArray) {
-                    if(p==null||"".equals(p)) continue;;
+                    if(p==null||"".equals(p)) continue;
                     if(request.getRequestURI().indexOf(p)!=-1){
                         filterChain.doFilter(request,response);
                         return;
@@ -59,7 +59,6 @@ public class RequestFilter implements Filter {
             List<Power> powerList=((Admin)request.getSession().getAttribute("admin1")).getPowerList();
             for (Power power : powerList) {
                 if(request.getRequestURI().indexOf(power.getPclass())!=-1){
-                    System.out.println(filterChain);
                     filterChain.doFilter(request,response);
                     return;
                 }
