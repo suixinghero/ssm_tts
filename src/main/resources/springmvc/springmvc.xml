@@ -39,5 +39,5 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 
 
     <!--配置异常处理器-->
-    <!--<bean class="org.ssm_tts.util.SysExceptionResolver" id="sysExceptionResolver"></bean>-->
+    <bean class="org.ssm_tts.util.SysExceptionResolver" id="sysExceptionResolver"></bean>
 </beans>
