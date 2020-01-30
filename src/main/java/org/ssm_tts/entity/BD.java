@@ -4,12 +4,12 @@ package org.ssm_tts.entity;
  * @author xujin
  * @package-name org.ssm_tts.entity
  * @createtime 2019-12-19 15:33
- * 业务账号账单对象
+ * 账务账号账单详情对象
  */
 
 public class BD {
     public static final Integer PAGE_SIZE=8;
-    private Integer bd_id;      //业务账号的账单id
+    private Integer bd_id;      //账务账号账单详情对象id
     private Long bd_duration;   //消费的时长
     private String createtime;  //用户业务账号上的花费
     private Double bd_cost;     //创建时间

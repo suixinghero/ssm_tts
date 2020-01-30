@@ -23,7 +23,16 @@ http://www.springframework.org/schema/context/spring-context.xsd
         <property name="username" value="${mysql.username}" />
         <property name="password" value="${mysql.password}" />
         <property name="maxActive" value="${mysql.maxActive}" />
+        <property name="initialSize" value="${mysql.initialSize}" />
         <property name="maxIdle" value="${mysql.maxIdle}" />
+        <property name="minIdle" value="${mysql.minIdle}" />
+        <property name="maxWait" value="${mysql.maxWait}" />
+        <property name="removeAbandoned" value="${mysql.removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${mysql.removeAbandonedTimeout}" />
+        <property name="logAbandoned" value="${mysql.logAbandoned}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${mysql.timeBetweenEvictionRunsMillis}" />
+        <property name="numTestsPerEvictionRun" value="${mysql.numTestsPerEvictionRun}" />
+        <property name="minEvictableIdleTimeMillis" value="${mysql.minEvictableIdleTimeMillis}" />
     </bean>
     <!--sqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

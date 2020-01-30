@@ -70,8 +70,6 @@ public class LoginController {
             return "redirect:../login.jsp";
 
         }
-
-
     }
 
     @RequestMapping("/exit")
