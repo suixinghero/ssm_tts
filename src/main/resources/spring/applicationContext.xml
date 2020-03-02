@@ -17,7 +17,7 @@ http://www.springframework.org/schema/context/spring-context.xsd
     <!--加载配置文件-->
     <context:property-placeholder location="classpath:mysql.properties"></context:property-placeholder>
     <!--数据源，使用dbcp-->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${mysql.driver}" />
         <property name="url" value="${mysql.url}" />
         <property name="username" value="${mysql.username}" />
@@ -33,6 +33,24 @@ http://www.springframework.org/schema/context/spring-context.xsd
         <property name="timeBetweenEvictionRunsMillis" value="${mysql.timeBetweenEvictionRunsMillis}" />
         <property name="numTestsPerEvictionRun" value="${mysql.numTestsPerEvictionRun}" />
         <property name="minEvictableIdleTimeMillis" value="${mysql.minEvictableIdleTimeMillis}" />
+    </bean>-->
+
+    <!--配置数据元druid-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${mysql.driver}"></property>
+        <property name="url" value="${mysql.url}"></property>
+        <property name="username" value="${mysql.username}"></property>
+        <property name="password" value="${mysql.password}"></property>
+        <property name="maxActive" value="${mysql.maxActive}"/>
+        <property name="initialSize" value="${mysql.initialSize}"/>
+        <property name="minIdle" value="${mysql.minIdle}"/>
+        <property name="maxWait" value="${mysql.maxWait}"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="${mysql.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${mysql.testOnBorrow}"/>
+        <property name="testOnReturn" value="${mysql.testOnReturn}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${mysql.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${mysql.minEvictableIdleTimeMillis}"/>
     </bean>
     <!--sqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -80,19 +98,19 @@ http://www.springframework.org/schema/context/spring-context.xsd
     -->
     <tx:advice id="txAdvice" transaction-manager="txManager">
         <tx:attributes>
-            <tx:method name="insert*" propagation="REQUIRED" />
-            <tx:method name="update*" propagation="REQUIRED" />
-            <tx:method name="reset*" propagation="REQUIRED" />
-            <tx:method name="modify*" propagation="REQUIRED" />
-            <tx:method name="save*" propagation="REQUIRED" />
-            <tx:method name="add*" propagation="REQUIRED" />
-            <tx:method name="set*" propagation="REQUIRED" />
-            <tx:method name="remove*" propagation="REQUIRED" />
-            <tx:method name="delete*" propagation="REQUIRED" />
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="query*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="reset*" propagation="REQUIRED"/>
+            <tx:method name="modify*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="set*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="query*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
         </tx:attributes>
     </tx:advice>
     <!--5.3AOP编程。目标类ABCD(4个连接点)，切入点表达式 确定增强的连接点，从而获得切入点:ABC-->

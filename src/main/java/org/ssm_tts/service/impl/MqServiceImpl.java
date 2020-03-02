@@ -28,7 +28,7 @@ public class MqServiceImpl implements MqService {
             @Override
             public Message createMessage(Session session) throws JMSException {
                 TextMessage textMessage = session.createTextMessage(service);
-                textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY,1000*60*60*24*30);
+                textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY,1000*60*60*24*30L);
                 return  textMessage;
             }
         });

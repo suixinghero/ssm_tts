@@ -60,15 +60,18 @@
             else
                 detailDiv.style.display = "none";
         }
-        //删除
-        function deleteAccount() {
-            var r = window.confirm("确定要删除此业务账号吗？删除后将不能恢复。");
-            document.getElementById("operate_result_info").style.display = "block";
-        }
-        //开通或暂停
+
+        //开通、暂停或删除
         function setState(status,s_id,acc_id) {
             if (status == 0) {
                 var r = window.confirm("确定要暂停此业务账号吗？");
+                if (r) {
+                    location.href = '${pageContext.request.contextPath}/service/modifyServiceStatus?s_id='+s_id+'&acc_id='+acc_id+'&s_status='+status;
+                }
+                return;
+            }
+            if (status == 2) {
+                var r = window.confirm("确定要删除此业务账号吗？");
                 if (r) {
                     location.href = '${pageContext.request.contextPath}/service/modifyServiceStatus?s_id='+s_id+'&acc_id='+acc_id+'&s_status='+status;
                 }
@@ -189,12 +192,12 @@
                                 <c:when test="${service.s_status == 1}">
                                     <input type="button" value="暂停" class="btn_pause" onclick="setState(0,${service.s_id},${service.acc_id});" />
                                     <input type="button" value="修改" class="btn_modify" onclick="location.href='${pageContext.request.contextPath}/service/serviceModi/${service.s_id}';" />
-                                    <input type="button" value="删除" class="btn_delete" onclick="deleteAccount();" />
+                                    <input type="button" value="删除" class="btn_delete" onclick="setState(2,${service.s_id},${service.acc_id});" />
                                 </c:when>
                                 <c:when test="${service.s_status == 0}">
                                     <input type="button" value="开通" class="btn_start" onclick="setState(1,${service.s_id},${service.acc_id});" />
                                     <input type="button" value="修改" class="btn_modify" onclick="location.href='${pageContext.request.contextPath}/service/serviceModi/${service.s_id}';" />
-                                    <input type="button" value="删除" class="btn_delete" onclick="deleteAccount();" />
+                                    <input type="button" value="删除" class="btn_delete" onclick="setState(2,${service.s_id},${service.acc_id});" />
                                 </c:when>
                             </c:choose>
                         </td>
